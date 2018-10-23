@@ -1,0 +1,55 @@
+body {
+  background-color: #84CED8;
+}
+
+.main_container {
+  width: 50%;
+  min-width: 400px;
+  height: 100%;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  text-align: center;
+  background-color: #FFFCF2;
+  box-shadow: 0px 5px 20px #0091A5;
+}
+
+h1 {
+padding-top: 100px;
+padding-bottom: 50px;
+
+}
+
+button.addToDo {
+  position: relative;
+  right: -45%;
+}
+
+#toDoList {
+  padding-left: 25%;
+}
+
+
+li {
+  justify-content: left;
+  width: inherit;
+  min-width: 400px;
+  transform: translateX();
+
+}
+
+.listyle {
+  max-width: 100px;
+  word-wrap: break-word;
+}
+
+button.del-but {
+  position: absolute;
+  right: 20%;
+  transform: translateY(-10px);
+}
+
+input.checkbox {
+  position: absolute;
+  right: 40%;
+}
