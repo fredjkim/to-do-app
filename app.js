@@ -14,14 +14,31 @@ function onReady() {
     let checkbox = document.createElement('input');
     //set the input's type to checkbox
     checkbox.type = "checkbox";
+    //add checkbox class
+    checkbox.classList.add('checkbox','mdl-checkbox__input');
     //set the title
     newLi.textContent = title;
-    //attach checkbox to the li
+    //add li class
+    newLi.classList.add('mdl-list__item');
+    //append checkbox to newLi
     newLi.appendChild(checkbox);
+
+    //create delete button
+    let delButton = document.createElement('button');
+    delButton.innerHTML = "Delete";
+    //add button class
+    delButton.classList.add('del-but','mdl-button', 'mdl-js-button', 'mdl-button--raised', 'mdl-js-ripple-effect');
+    //append button to newLi
+    newLi.appendChild(delButton);
+
     //attach li to ul
     toDoList.appendChild(newLi);
-
     newToDoText.value = '';
+
+    //delete parent element (newLi)
+    delButton.addEventListener ('click', event => {
+      delButton.parentNode.remove();
+    });
 
   });
 };
