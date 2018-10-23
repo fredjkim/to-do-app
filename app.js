@@ -1,32 +1,60 @@
 function onReady() {
-   const addToDoForm = document.getElementById('addToDoForm');
-   const newToDoText = document.getElementById('newToDoText');
-   const toDoList = document.getElementById('toDoList');
+  const toDos = [];
+  const addToDoForm = document.getElementById('addToDoForm');
 
-   addToDoForm.addEventListener('submit', event => {
-     event.preventDefault();
+  function createNewToDo() {
+    //grab input task
+    const newToDoText = document.getElementById('newToDoText');
+    //return if empty input
+    if (!newToDoText.value) { return; }
 
-     //get the text
-     let title = newToDoText.value;
-     //create new li
-     let newLi = document.createElement('li');
-     //create a new input
-     let checkbox = document.createElement('input');
-     //set the input's type to checkbox
-     checkbox.type = "checkbox";
-     //set the title
-     newLi.textContent = title;
-     //attach checkbox to the li
-     newLi.appendChild(checkbox);
-     //attach li to ul
-     toDoList.appendChild(newLi);
+    //push into array with key/value
+    toDos.push({
+      //assign value from input
+      title: newToDoText.value,
+      complete: false
+    });
+    //clear input text
+    newToDoText.value = '';
+    //call render func every time state changes
+    renderTheUI();
+  }
 
-     newToDoText.value = '';
+  //renders UI based on state
+  function renderTheUI() {
+    //access UL
+    const toDoList = document.getElementById('toDoList');
+    //empty li content
+    toDoList.textContent = '';
 
-   });
- };
- 
+    toDos.forEach(function(toDo) {
+      const newLi = document.createElement('li');
+      const checkbox = document.createElement('input');
+      checkbox.type = "checkbox";
 
- window.onload = function() {
-   onReady();
- };
+      newLi.textContent = toDo.title;
+
+      toDoList.appendChild(newLi);
+      newLi.appendChild(checkbox);
+
+    });
+  };
+
+  //event listener - listens for submit
+  addToDoForm.addEventListener('submit', event => {
+    //prevents reload
+    event.preventDefault();
+    //calls function upon submit
+    createNewToDo();
+  });
+
+  //call function
+  renderTheUI();
+}
+
+
+
+//loads function on page load
+window.onLoad = function() {
+  onReady();
+};
