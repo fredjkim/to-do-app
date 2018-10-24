@@ -1,4 +1,5 @@
 function onReady() {
+  let id = 0;
   const toDos = [];
   const addToDoForm = document.getElementById('addToDoForm');
 
@@ -12,8 +13,12 @@ function onReady() {
     toDos.push({
       //assign value from input
       title: newToDoText.value,
-      complete: false
+      complete: false,
+      id: id.value
     });
+
+    //incrememt
+    id++;
     //clear input text
     newToDoText.value = '';
     //call render func every time state changes
@@ -26,16 +31,20 @@ function onReady() {
     const toDoList = document.getElementById('toDoList');
     //empty li content
     toDoList.textContent = '';
-
+    //create ui and append
     toDos.forEach(function(toDo) {
       const newLi = document.createElement('li');
       const checkbox = document.createElement('input');
       checkbox.type = "checkbox";
+      const button = document.createElement('button');
+      button.type = 'Delete';
+      button.textContent = "Delete";
 
       newLi.textContent = toDo.title;
 
       toDoList.appendChild(newLi);
       newLi.appendChild(checkbox);
+      newLi.appendChild(button);
 
     });
   };
@@ -48,6 +57,16 @@ function onReady() {
     createNewToDo();
   });
 
+  //event listener - listens for click to delete parent node
+  toDoList.addEventListener('click', event => {
+    //remove toDo from array if id matches
+  var newArr = toDos.filter(toDo => toDo.id !== id.value);
+  let toDos = newArr;
+
+    renderTheUI();
+  });
+
+
   //call function
   renderTheUI();
 }
@@ -55,6 +74,6 @@ function onReady() {
 
 
 //loads function on page load
-window.onLoad = function() {
+window.onload = function() {
   onReady();
 };
