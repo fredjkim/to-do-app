@@ -1,29 +1,26 @@
 function onReady() {
   let id = 0;
-  const toDos = [];
+  let toDos = [];
   const addToDoForm = document.getElementById('addToDoForm');
+  const newToDoText = document.getElementById('newToDoText');
 
   function createNewToDo() {
     //grab input task
-    const newToDoText = document.getElementById('newToDoText');
     //return if empty input
     if (!newToDoText.value) { return; }
-
     //push into array with key/value
     toDos.push({
       //assign value from input
       title: newToDoText.value,
       complete: false,
-      id: id.value
+      id: ++id
     });
-
-    //incrememt
-    id++;
-    //clear input text
-    newToDoText.value = '';
-    //call render func every time state changes
-    renderTheUI();
   }
+
+  function deleteToDo(id) {
+    return toDos.filter(toDo => toDo.id !== id);
+  }
+
 
   //renders UI based on state
   function renderTheUI() {
@@ -36,17 +33,21 @@ function onReady() {
       const newLi = document.createElement('li');
       const checkbox = document.createElement('input');
       checkbox.type = "checkbox";
-      const button = document.createElement('button');
-      button.type = 'Delete';
-      button.textContent = "Delete";
+      const delBtn = document.createElement('button');
+      //delBtn.type = 'Delete';
+      delBtn.innerHTML = "Delete";
 
       newLi.textContent = toDo.title;
 
-      toDoList.appendChild(newLi);
-      newLi.appendChild(checkbox);
-      newLi.appendChild(button);
+    toDoList.appendChild(newLi);
+    newLi.appendChild(checkbox);
+    newLi.appendChild(delBtn);
 
+    delBtn.addEventListener('click', () => {
+      toDos = deleteToDo(toDo.id);
+      renderTheUI();
     });
+  });
   };
 
   //event listener - listens for submit
@@ -55,22 +56,14 @@ function onReady() {
     event.preventDefault();
     //calls function upon submit
     createNewToDo();
-  });
-
-  //event listener - listens for click to delete parent node
-  toDoList.addEventListener('click', event => {
-    //remove toDo from array if id matches
-  var newArr = toDos.filter(toDo => toDo.id !== id.value);
-  let toDos = newArr;
-
+    newToDoText.value = '';
     renderTheUI();
-  });
 
+  });
 
   //call function
   renderTheUI();
 }
-
 
 
 //loads function on page load
